@@ -1,14 +1,14 @@
 [tool.poetry]
-name = "coveragepy-lcov"
-version = "0.1.1"
+name = "coverage-lcov"
+version = "0.2.0"
 description = "A simple .coverage to LCOV converter"
-authors = ["Chay Choong <chaychoong@gmail.com>"]
-repository = "https://github.com/chaychoong/coveragepy-lcov"
+authors = ["Adam Weeden <adamweeden@gmail.com>", "Chay Choong <chaychoong@gmail.com>"]
+repository = "https://github.com/TheCleric/coverage-lcov"
 readme = "README.md"
 keywords = ["coverage"]
 
 [tool.poetry.scripts]
-coveragepy-lcov = "coveragepy_lcov.cli:main"
+coverage-lcov = "coverage_lcov.cli:main"
 
 [tool.poetry.dependencies]
 python = "^3.6.3"
