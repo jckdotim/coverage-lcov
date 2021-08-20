@@ -9,6 +9,7 @@ keywords = ["coverage"]
 
 [tool.poetry.scripts]
 coverage-lcov = "coverage_lcov.cli:main"
+test = "pytest:main"
 
 [tool.poetry.dependencies]
 python = "^3.6.3"
