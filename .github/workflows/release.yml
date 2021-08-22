@@ -36,6 +36,14 @@ jobs:
         shell: bash
         run: poetry build
 
+      - name: Install dependencies
+        shell: bash
+        run: poetry install
+
+      - name: Run pytest
+        shell: bash
+        run: poetry run python -m pytest -p no:sugar -q tests/
+
       - name: Check Version
         id: check-version
         shell: bash
@@ -50,14 +58,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           draft: false
           prerelease: steps.check-version.outputs.prerelease == 'true'
-
-      - name: Install dependencies
-        shell: bash
-        run: poetry install
-
-      - name: Run pytest
-        shell: bash
-        run: poetry run python -m pytest -p no:sugar -q tests/
 
       - name: Publish to PyPI
         env:
