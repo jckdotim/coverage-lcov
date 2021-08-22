@@ -44,10 +44,6 @@ jobs:
         shell: bash
         run: echo "$APPDATA\\Python\\Scripts" >> $GITHUB_PATH
 
-      - name: Echo path
-        shell: bash
-        run: echo $GITHUB_PATH
-
       - name: Configure poetry
         shell: bash
         run: poetry config virtualenvs.in-project true
