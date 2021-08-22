@@ -39,12 +39,14 @@ jobs:
       - name: Update PATH
         if: ${{ matrix.platorm != 'windows-latest' }}
         shell: bash
-        run: echo "$HOME/.local/bin" >> $POETRY_PATH
+        run: echo "::set-env name=POETRY_PATH::$HOME/.local/bin"
+        # run: echo "$HOME/.local/bin" >> $POETRY_PATH
 
       - name: Update Path for Windows
         if: ${{ matrix.platfor == 'windows-latest' }}
         shell: bash
-        run: echo "$APPDATA\Python\Scripts" >> $POETRY_PATH
+        run: echo "::set-env name=POETRY_PATH::$APPDATA\\Python\\Scripts"
+        # run: echo "$APPDATA\Python\Scripts" >> $POETRY_PATH
 
       - name: Configure poetry
         shell: bash
