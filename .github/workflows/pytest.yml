@@ -10,8 +10,6 @@ on:
 jobs:
   test:
     name: ${{ matrix.platform }} / ${{ matrix.python-version }}
-    env:
-      POETRY_PATH: ''
     strategy:
       matrix:
         python-version:
@@ -39,14 +37,16 @@ jobs:
       - name: Update PATH
         if: ${{ matrix.platorm != 'windows-latest' }}
         shell: bash
-        run: echo "::set-env name=POETRY_PATH::$HOME/.local/bin"
-        # run: echo "$HOME/.local/bin" >> $POETRY_PATH
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Update Path for Windows
         if: ${{ matrix.platfor == 'windows-latest' }}
         shell: bash
-        run: echo "::set-env name=POETRY_PATH::$APPDATA\\Python\\Scripts"
-        # run: echo "$APPDATA\Python\Scripts" >> $POETRY_PATH
+        run: echo "$APPDATA\\Python\\Scripts" >> $GITHUB_PATH
+
+      - name: Echo path
+        shell: bash
+        run: echo $GITHUB_PATH
 
       - name: Configure poetry
         shell: bash
