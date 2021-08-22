@@ -1,3 +1,8 @@
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 140
+
 [tool.mypy]
 # Display options
 pretty = true
@@ -34,7 +39,10 @@ strict_equality = true
 name = "coverage-lcov"
 version = "0.2.1"
 description = "A simple .coverage to LCOV converter"
-authors = ["Adam Weeden <adamweeden@gmail.com>", "Chay Choong <chaychoong@gmail.com>"]
+authors = [
+    "Adam Weeden <adamweeden@gmail.com>",
+    "Chay Choong <chaychoong@gmail.com>",
+]
 repository = "https://github.com/TheCleric/coverage-lcov"
 readme = "README.md"
 keywords = ["coverage"]
@@ -54,11 +62,27 @@ isort = "^5.8.0"
 mypy = "^0.910"
 pytest = "^5.2"
 types-click = "^7.1.5"
+pylint = "^2.10.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.isort]
-profile = "black"
-multi_line_output = 3
+[tool.pylint.pep8]
+'max-line-length' = 140
+
+[tool.pylint.SIMILARITIES]
+min-similarity-lines = 8
+
+[tool.pylint.MASTER]
+ignore = '**/site-packages'
+# init-hook = "import os, sys; workspace_root=os.path.realpath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', '..', '..')); sys.path.append(workspace_root)"
+
+[tool.pylint.'MESSAGES CONTROL']
+enable = ['errors', 'warnings']
+disable = [
+    'missing-class-docstring',
+    'missing-function-docstring',
+    'missing-module-docstring',
+    # 'too-few-public-methods',
+]
