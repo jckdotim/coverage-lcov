@@ -21,10 +21,6 @@ jobs:
         - ubuntu-latest
         - macos-latest
         - windows-latest
-        prefix: ['']
-        include:
-          - platform: windows-latest
-            prefix: $APPDATA\\Python\\Scripts\\
     runs-on: "${{ matrix.platform }}"
     steps:
       - uses: actions/checkout@v2
@@ -41,29 +37,29 @@ jobs:
       - name: Update PATH
         if: ${{ matrix.platorm != 'windows-latest' }}
         shell: bash
-        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+        run: echo "$HOME/.local/bin" >> $POETRY_PATH
 
       - name: Update Path for Windows
         if: ${{ matrix.platfor == 'windows-latest' }}
         shell: bash
-        run: echo "$APPDATA\Python\Scripts" >> $GITHUB_PATH
+        run: echo "$APPDATA\Python\Scripts" >> $POETRY_PATH
 
       - name: Configure poetry
         shell: bash
-        run: ${{ matrix.prefix }}poetry config virtualenvs.in-project true
+        run: ${{ POETRY_PATH }}poetry config virtualenvs.in-project true
 
       - name: Sanity check poetry config
         shell: bash
-        run: ${{ matrix.prefix }}poetry check
+        run: ${{ POETRY_PATH }}poetry check
 
       - name: Run poetry bui
         shell: bash
-        run: ${{ matrix.prefix }}poetry build
+        run: ${{ POETRY_PATH }}poetry build
 
       - name: Install dependencies
         shell: bash
-        run: ${{ matrix.prefix }}poetry install
+        run: ${{ POETRY_PATH }}poetry install
 
       - name: Run pytest
         shell: bash
-        run: ${{ matrix.prefix }}poetry run python -m pytest -p no:sugar -q tests/
+        run: ${{ POETRY_PATH }}poetry run python -m pytest -p no:sugar -q tests/
