@@ -70,4 +70,4 @@ jobs:
 
       - name: Eat our own dog food
         shell: bash
-        run: poetry run coveragepy-lcov
+        run: poetry run coverage-lcov
