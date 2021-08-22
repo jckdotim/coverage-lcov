@@ -56,10 +56,6 @@ jobs:
         shell: bash
         run: poetry install
 
-      - name: PyTest
-        shell: bash
-        run: poetry run pytest
-
       - name: Mypy
         shell: bash
         run: poetry run mypy .
@@ -67,3 +63,11 @@ jobs:
       - name: Mypy
         shell: bash
         run: poetry run pylint coverage_lcov tests
+
+      - name: PyTest
+        shell: bash
+        run: poetry run coverage run --source=coverage_lcov -m pytest tests && poetry run coverage report
+
+      - name: Eat our own dog food
+        shell: bash
+        run: poetry run coveragepy-lcov
