@@ -5,7 +5,7 @@ import coverage
 from coverage.files import FnmatchMatcher, prep_patterns
 from coverage.misc import CoverageException, NoSource, NotPython
 
-log = logging.getLogger("coveragepy_lcov.converter")
+log = logging.getLogger("coverage_lcov.converter")
 
 
 class Converter:

@@ -1,0 +1,65 @@
+# This workflow will run tests on PRs
+
+name: PyTest On PR
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    name: ${{ matrix.platform }} / ${{ matrix.python-version }}
+    strategy:
+      matrix:
+        python-version:
+        - 3.6
+        - 3.7
+        - 3.8
+        - 3.9
+        platform:
+        - ubuntu-latest
+        - macos-latest
+        - windows-latest
+    runs-on: "${{ matrix.platform }}"
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "${{ matrix.python-version }}"
+  
+      - name: Bootstrap poetry
+        shell: bash
+        run: |
+          curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python -
+
+      - name: Update PATH
+        if: ${{ matrix.platorm != 'windows-latest' }}
+        shell: bash
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Update Path for Windows
+        if: ${{ matrix.platform == 'windows-latest' }}
+        shell: bash
+        run: echo "$APPDATA\\Python\\Scripts" >> $GITHUB_PATH
+
+      - name: Configure poetry
+        shell: bash
+        run: poetry config virtualenvs.in-project true
+
+      - name: Sanity check poetry config
+        shell: bash
+        run: poetry check
+
+      - name: Run poetry bui
+        shell: bash
+        run: poetry build
+
+      - name: Install dependencies
+        shell: bash
+        run: poetry install
+
+      - name: Run pytest
+        shell: bash
+        run: poetry run python -m pytest -p no:sugar -q tests/

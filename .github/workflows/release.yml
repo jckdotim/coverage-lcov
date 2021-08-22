@@ -21,18 +21,24 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: "3.6"
-
-      - name: Install Poetry
-        run: curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python -
+  
+      - name: Bootstrap poetry
+        shell: bash
+        run: |
+          curl -sL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py \
+            | python -
 
       - name: Update PATH
+        shell: bash
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Build project for distribution
+        shell: bash
         run: poetry build
 
       - name: Check Version
         id: check-version
+        shell: bash
         run: |
           [[ "$(poetry version --short)" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] \
             || echo ::set-output name=prerelease::true
@@ -45,7 +51,16 @@ jobs:
           draft: false
           prerelease: steps.check-version.outputs.prerelease == 'true'
 
+      - name: Install dependencies
+        shell: bash
+        run: poetry install
+
+      - name: Run pytest
+        shell: bash
+        run: poetry run python -m pytest -p no:sugar -q tests/
+
       - name: Publish to PyPI
         env:
           POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
+        shell: bash
         run: poetry publish
