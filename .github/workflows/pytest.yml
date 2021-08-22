@@ -29,7 +29,25 @@ jobs:
         with:
           python-version: "${{ matrix.python-version }}"
   
-      - uses: Gr1N/setup-poetry@v7
+      - name: Bootstrap poetry
+        shell: bash
+        run: |
+          curl -sL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py \
+            | python -
+
+      - name: Update PATH
+        if: ${{ matrix.os != 'Windows' }}
+        shell: bash
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Update Path for Windows
+        if: ${{ matrix.os == 'Windows' }}
+        shell: bash
+        run: echo "$APPDATA\Python\Scripts" >> $GITHUB_PATH
+
+      - name: Configure poetry
+        shell: bash
+        run: poetry config virtualenvs.in-project true
 
       - name: Sanity check poetry config
         run: poetry check
@@ -37,5 +55,10 @@ jobs:
       - name: Run poetry build
         run: poetry build
 
-      - name: Run tests
-        run: poetry install pytest && poetry run test
+      - name: Install dependencies
+        shell: bash
+        run: poetry install
+
+      - name: Run pytest
+        shell: bash
+        run: poetry run python -m pytest -p no:sugar -q tests/
