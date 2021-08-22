@@ -32,17 +32,25 @@ jobs:
         shell: bash
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      - name: Build project for distribution
+      - name: Configure poetry
         shell: bash
-        run: poetry build
+        run: poetry config virtualenvs.in-project true
+
+      - name: Poetry check & build
+        shell: bash
+        run: poetry check && poetry build
 
       - name: Install dependencies
         shell: bash
         run: poetry install
 
-      - name: Run pytest
+      - name: PyTest
         shell: bash
-        run: poetry run python -m pytest -p no:sugar -q tests/
+        run: poetry run pytest
+
+      - name: Mypy
+        shell: bash
+        run: poetry run mypy .
 
       - name: Check Version
         id: check-version

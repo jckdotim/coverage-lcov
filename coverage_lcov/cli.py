@@ -11,7 +11,7 @@ from .converter import Converter
 @click.option("--config_file", default=True, help="Path to .coveragerc file")
 @click.option("--relative_path", is_flag=True, help="Use relative path in LCOV output")
 @click.option("--preview", is_flag=True, help="Preview LCOV output")
-def main(data_file_path, output_file_path, config_file, relative_path, preview):
+def main(data_file_path: str, output_file_path: str, config_file: str, relative_path: bool, preview: bool) -> None:
     converter = Converter(
         data_file_path=data_file_path,
         config_file=config_file,
