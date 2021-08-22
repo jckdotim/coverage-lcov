@@ -1,5 +1,5 @@
 import logging
-from typing import Union
+from typing import Optional, Union
 
 import coverage
 from coverage.files import FnmatchMatcher, prep_patterns
@@ -96,14 +96,14 @@ class Converter:
         lcov_str = self.get_lcov()
         print(lcov_str)
 
-    def create_lcov(self, output_file_path) -> None:
+    def create_lcov(self, output_file_path: str) -> None:
         lcov_str = self.get_lcov()
 
         with open(output_file_path, "w") as output_file:
             output_file.write(lcov_str)
 
 
-def get_hits(line_num, analysis):
+def get_hits(line_num: int, analysis: coverage.Analysis) -> Optional[int]:
     if line_num in analysis.missing:
         return 0
 

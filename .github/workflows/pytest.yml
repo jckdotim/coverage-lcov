@@ -48,18 +48,18 @@ jobs:
         shell: bash
         run: poetry config virtualenvs.in-project true
 
-      - name: Sanity check poetry config
+      - name: Poetry check & build
         shell: bash
-        run: poetry check
-
-      - name: Run poetry bui
-        shell: bash
-        run: poetry build
+        run: poetry check && poetry build
 
       - name: Install dependencies
         shell: bash
         run: poetry install
 
-      - name: Run pytest
+      - name: PyTest
         shell: bash
-        run: poetry run python -m pytest -p no:sugar -q tests/
+        run: poetry run pytest
+
+      - name: Mypy
+        shell: bash
+        run: poetry run mypy .
