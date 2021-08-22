@@ -13,13 +13,13 @@ jobs:
       matrix:
         python-version:
         - 3.6
-        # - 3.7
-        # - 3.8
-        # - 3.9
+        - 3.7
+        - 3.8
+        - 3.9
         platform:
         - ubuntu-latest
-        # - macos-latest
-        # - windows-latest
+        - macos-latest
+        - windows-latest
     name: Install dependencies and test
     runs-on: "${{ matrix.platform }}"
     steps:
@@ -50,9 +50,11 @@ jobs:
         run: poetry config virtualenvs.in-project true
 
       - name: Sanity check poetry config
+        shell: bash
         run: poetry check
 
-      - name: Run poetry build
+      - name: Run poetry bui
+        shell: bash
         run: poetry build
 
       - name: Install dependencies
