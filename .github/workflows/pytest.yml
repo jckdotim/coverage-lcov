@@ -73,6 +73,7 @@ jobs:
         run: poetry run coverage-lcov
 
       - name: Report code coverage
+        if: ${{ matrix.platform == 'ubuntu-latest' && matrix.python-version == '3.9' }}
         uses: zgosalvez/github-actions-report-lcov@v1
         with:
           coverage-files: lcov.info
