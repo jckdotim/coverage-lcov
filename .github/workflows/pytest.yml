@@ -70,7 +70,7 @@ jobs:
 
       - name: Eat our own dog food
         shell: bash
-        run: poetry run coverage-lcov-
+        run: poetry run coverage-lcov
 
       - name: Report code coverage
         uses: zgosalvez/github-actions-report-lcov@v1
