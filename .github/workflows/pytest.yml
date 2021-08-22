@@ -63,3 +63,7 @@ jobs:
       - name: Mypy
         shell: bash
         run: poetry run mypy .
+
+      - name: Mypy
+        shell: bash
+        run: poetry run pylint coverage_lcov tests
