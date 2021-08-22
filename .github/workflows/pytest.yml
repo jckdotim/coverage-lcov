@@ -25,7 +25,6 @@ jobs:
         include:
           - platform: windows-latest
             prefix: $APPDATA\\Python\\Scripts\\
-    name: Install dependencies and test
     runs-on: "${{ matrix.platform }}"
     steps:
       - uses: actions/checkout@v2
