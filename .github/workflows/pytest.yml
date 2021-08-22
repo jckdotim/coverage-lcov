@@ -10,6 +10,8 @@ on:
 jobs:
   test:
     name: ${{ matrix.platform }} / ${{ matrix.python-version }}
+    env:
+      POETRY_PATH: ''
     strategy:
       matrix:
         python-version:
