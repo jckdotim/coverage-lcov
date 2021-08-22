@@ -9,6 +9,7 @@ on:
 
 jobs:
   test:
+    name: ${{ matrix.platform }} / ${{ matrix.python-version }}
     strategy:
       matrix:
         python-version:
@@ -23,7 +24,7 @@ jobs:
         prefix: ['']
         include:
           - platform: windows-latest
-            prefix: $APPDATA\Python\Scripts\
+            prefix: $APPDATA\\Python\\Scripts\\
     name: Install dependencies and test
     runs-on: "${{ matrix.platform }}"
     steps:
